@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -15,4 +16,5 @@ public class Email {
     private String subject;
     @NotBlank(message = "Please compose message.")
     private String message;
+    private MultipartFile file;
 }

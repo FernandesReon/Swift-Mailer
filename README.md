@@ -27,3 +27,4 @@ modern server side technology Thymeleaf. The backend is powered by Spring Boot f
   This project showcases the best practices in API design, frontend development, and backend integration.
 </p>
 
+![Swift Mailer UI](src/main/resources/static/images/Swift Mailer.png)

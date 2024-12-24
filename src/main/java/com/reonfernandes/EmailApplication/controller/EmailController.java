@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin("*")
 @Controller
@@ -27,13 +26,12 @@ public class EmailController {
         logger.info("(Controller) Accessing Swift Mailer page.");
         Email emailForm = new Email();
         model.addAttribute("email", emailForm);
-        model.addAttribute("sending", false); // Initialize sending to false
+        model.addAttribute("sending", false);
         return "swift-mailer";
     }
 
     @PostMapping("sendEmail")
-    public String sendEmail(@Valid @ModelAttribute("email") Email email, BindingResult result, Model model,
-                            @RequestParam(required = false) MultipartFile file) {
+    public String sendEmail(@Valid @ModelAttribute("email") Email email, BindingResult result, Model model) {
         logger.info("(Controller) Sending Email");
 
         if (result.hasErrors()) {
@@ -44,9 +42,9 @@ public class EmailController {
         try {
             model.addAttribute("sending", true);
             logger.info("Sending attribute set to true in the model");
-            if (file != null && !file.isEmpty()) {
+            if (email.getFile() != null && !email.getFile().isEmpty()) {
                 emailService.sendEmailWithFileStream(
-                        email.getReceiver(), email.getSubject(), email.getMessage(), file
+                        email.getReceiver(), email.getSubject(), email.getMessage(), email.getFile()
                 );
             } else {
                 emailService.sendEmailWithHTML(

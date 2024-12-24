@@ -41,7 +41,7 @@
 
                 <div>
                     <label for="file-upload" class="custom-file-upload">Attachment</label>
-                    <input type="file" id="file-upload"
+                    <input th:field="*{file}" type="file" id="file-upload"
                            accept=".jpg, .jpeg, .png, .gif, .txt, .doc, .docx, .pdf, .mp3, .wav, .mp4, .mkv, .avi" />
                     <span class="file-input-para">Accepted file types: Images, Text, Documents, Audio, and Videos.</span>
                 </div>
