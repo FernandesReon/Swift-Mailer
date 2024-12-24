@@ -1,0 +1,21 @@
+<!doctype html>
+<html
+        lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        th:replace="~{base :: parent(~{:: #content}, ~{:: title}, ~{})}"
+>
+<head>
+    <title>Success Page</title>
+</head>
+<body>
+<div id="content">
+    <div class="success-outer-container">
+        <div class="success-inner-container">
+            <h1 class="success-title">Success! <span class="success-tick">&#x2713;</span></h1>
+            <p class="success-message">Your email has been sent successfully.</p>
+            <a th:href="@{/}" class="success-link">Back to Homepage</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

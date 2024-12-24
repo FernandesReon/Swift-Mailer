@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{base :: parent(~{:: #content}, ~{:: title}, ~{:: script})}">
+<head>
+    <title>Swift Mailer</title>
+</head>
+
+<body>
+<div id="content">
+    <section class="contact" id="contact">
+        <div class="contact-outer-container">
+            <h2>Swift Mailer</h2>
+            <p>Easily connect with friends, family, or anyone by sending emails in just a few clicks.</p>
+
+            <form th:action="@{/sendEmail}"
+                  method="post"
+                  class="contact-form"
+                  th:object="${email}"
+                  novalidate
+                  enctype="multipart/form-data">
+                <div>
+                    <label for="email">Your email</label>
+                    <input th:field="*{receiver}" type="email" name="email" id="email"
+                           placeholder="name@company.com" autocomplete="off" required>
+                    <span th:if="${#fields.hasErrors('receiver')}" th:errors="*{receiver}" class="alert"></span>
+                </div>
+
+                <div>
+                    <label for="subject">Subject</label>
+                    <input th:field="*{subject}" type="text" name="subject" id="subject"
+                           placeholder="Let us know how we can help you" required>
+                    <span th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}" class="alert"></span>
+                </div>
+
+                <div>
+                    <label for="message">Your message</label>
+                    <textarea th:field="*{message}" class="message" id="message" rows="6"
+                              placeholder="Leave a comment..."></textarea>
+                    <span th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="alert"></span>
+                </div>
+
+                <div>
+                    <label for="file-upload" class="custom-file-upload">Attachment</label>
+                    <input type="file" id="file-upload"
+                           accept=".jpg, .jpeg, .png, .gif, .txt, .doc, .docx, .pdf, .mp3, .wav, .mp4, .mkv, .avi" />
+                    <span class="file-input-para">Accepted file types: Images, Text, Documents, Audio, and Videos.</span>
+                </div>
+
+                <div class="form-btns">
+                    <button type="submit">
+                        <span>Send email</span>
+                        <span class="loader" style="display: none;"></span>
+                    </button>
+                    <button type="reset">Clear</button>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script>
+    document.querySelector('.contact-form').addEventListener('submit', function () {
+        const submitButton = document.querySelector('.form-btns button[type="submit"]');
+        const loader = submitButton.querySelector('.loader');
+
+        // Change button text
+        submitButton.querySelector('span').textContent = 'Sending email...';
+
+        // Show the loader
+        loader.style.display = 'inline-block';
+    });
+</script>
+
+</body>
+</html>
