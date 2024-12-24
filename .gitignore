@@ -1,0 +1,8 @@
+# Target directory
+/target/
+
+# IDE settings
+.idea/
+
+# Compiled class files
+*.class
