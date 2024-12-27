@@ -18,6 +18,7 @@ import java.io.File;
 public class EmailServiceImpl implements EmailService {
     private final JavaMailSender mailSender;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final String senderEmailId = "reonjervasiofernandes@gmail.com";
 
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -31,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
         simpleMailMessage.setTo(receiver);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message);
-        simpleMailMessage.setFrom("reondias@gmail.com");
+        simpleMailMessage.setFrom(senderEmailId);
 
         mailSender.send(simpleMailMessage);
         logger.info("Email has been sent..");
@@ -45,7 +46,7 @@ public class EmailServiceImpl implements EmailService {
         simpleMailMessage.setTo(receivers);
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message);
-        simpleMailMessage.setFrom("reondias@gmail.com");
+        simpleMailMessage.setFrom(senderEmailId);
 
         mailSender.send(simpleMailMessage);
         logger.info("Emails have been sent..");
@@ -61,7 +62,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(receiver);
             helper.setSubject(subject);
-            helper.setFrom("reondias@gmail.com");
+            helper.setFrom(senderEmailId);
             helper.setText(htmlContent, true);
 
             mailSender.send(message);
@@ -81,7 +82,7 @@ public class EmailServiceImpl implements EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(receivers);
             helper.setSubject(subject);
-            helper.setFrom("reondias@gmail.com");
+            helper.setFrom(senderEmailId);
             helper.setText(htmlContent, true);
 
             mailSender.send(message);
@@ -101,7 +102,7 @@ public class EmailServiceImpl implements EmailService {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            helper.setFrom("reondias@gmail.com");
+            helper.setFrom(senderEmailId);
             helper.setTo(receiver);
             helper.setSubject(subject);
             helper.setText(message);
@@ -126,7 +127,7 @@ public class EmailServiceImpl implements EmailService {
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
 
-            helper.setFrom("reondias@gmail.com");
+            helper.setFrom(senderEmailId);
             helper.setTo(receivers);
             helper.setSubject(subject);
             helper.setText(message);
@@ -148,7 +149,7 @@ public class EmailServiceImpl implements EmailService {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
-            helper.setFrom("reondias@gmail.com");
+            helper.setFrom(senderEmailId);
             helper.setTo(receiver);
             helper.setSubject(subject);
             helper.setText(message, true);
