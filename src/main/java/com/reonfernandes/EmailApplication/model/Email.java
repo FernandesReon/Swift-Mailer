@@ -10,11 +10,15 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Email {
+
     @NotBlank(message = "Receiver's email is required.")
     private String receiver;
+
     @NotBlank(message = "Subject of email is required.")
     private String subject;
+
     @NotBlank(message = "Please compose message.")
     private String message;
+
     private MultipartFile file;
 }
