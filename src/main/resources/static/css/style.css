@@ -199,6 +199,17 @@ button[type="reset"] {
     background: var(--danger-color);
 }
 
+.check{
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+}
+
+.check label{
+    margin-bottom: 0;
+}
+
 /* error page */
 .error-outer-container,
 .success-outer-container {
