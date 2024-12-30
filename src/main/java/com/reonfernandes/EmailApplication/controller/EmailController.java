@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @CrossOrigin("*")
 @Controller
 public class EmailController {
@@ -42,15 +44,23 @@ public class EmailController {
         try {
             model.addAttribute("sending", true);
             logger.info("Sending attribute set to true in the model");
-            if (email.getFile() != null && !email.getFile().isEmpty()) {
+
+
+            if (email.getFile() != null && !email.getFile().isEmpty()){
+                logger.info("Sending to single recipient with file.");
+                // can send email to single and multiple users with file and html content or with simple text.
                 emailService.sendEmailWithFileStream(
-                        email.getReceiver(), email.getSubject(), email.getMessage(), email.getFile()
-                );
-            } else {
-                emailService.sendEmailWithHTML(
-                        email.getReceiver(), email.getSubject(), email.getMessage()
+                        email.getRecipient(), email.getSubject(), email.getMessage(), email.getFile()
                 );
             }
+            else {
+                logger.info("Sending to single recipient without file.");
+                // can send email to single and multiple users with html content and simple text.
+                emailService.sendEmailWithHTML(
+                        email.getRecipient(), email.getSubject(), email.getMessage()
+                );
+            }
+
             logger.info("Email sent successfully!");
             model.addAttribute("success", "Email sent successfully.");
             return "success";

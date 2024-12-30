@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.List;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -39,18 +40,22 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmail(String[] receivers, String subject, String message) {
-        logger.info("(Service) Sending emails to: {}", (Object) receivers);
+    public void sendEmail(List<String> receivers, String subject, String message) {
+        logger.info("(Service) Sending emails to: {}", receivers);
 
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(receivers);
+
+        String[] receiverArray = receivers.toArray(new String[0]);
+        simpleMailMessage.setTo(receiverArray);
+
         simpleMailMessage.setSubject(subject);
         simpleMailMessage.setText(message);
         simpleMailMessage.setFrom(senderEmailId);
-
         mailSender.send(simpleMailMessage);
-        logger.info("Emails have been sent..");
+
+        logger.info("Emails have been sent.");
     }
+
 
     @Override
     public void sendEmailWithHTML(String receiver, String subject, String htmlContent) {
@@ -69,26 +74,6 @@ public class EmailServiceImpl implements EmailService {
             logger.info("Email has been sent with HTML content..");
         }
         catch (MessagingException messagingException){
-            logger.error("Error while sending email with HTML content: ", messagingException);
-        }
-    }
-
-    @Override
-    public void sendEmailWithHTML(String[] receivers, String subject, String htmlContent) {
-        logger.info("(Service) Sending emails to: {} with html-content.", (Object) receivers);
-        MimeMessage message = mailSender.createMimeMessage();
-
-        try {
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(receivers);
-            helper.setSubject(subject);
-            helper.setFrom(senderEmailId);
-            helper.setText(htmlContent, true);
-
-            mailSender.send(message);
-            logger.info("Emails have been sent with HTML content..");
-
-        } catch (MessagingException messagingException) {
             logger.error("Error while sending email with HTML content: ", messagingException);
         }
     }
@@ -144,13 +129,33 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendEmailWithFileStream(String receiver, String subject, String message, MultipartFile file) {
-        logger.info("(Service) Sending email to: {} with file attachment.", receiver);
+    public void sendEmailWithHTML(String[] recipient, String subject, String htmlContent) {
+        logger.info("(Service) Sending emails to: {} with html-content.", (Object) recipient);
+        MimeMessage message = mailSender.createMimeMessage();
+
+        try {
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            helper.setTo(recipient);
+            helper.setSubject(subject);
+            helper.setFrom(senderEmailId);
+            helper.setText(htmlContent, true);
+
+            mailSender.send(message);
+            logger.info("Emails have been sent with HTML content..");
+
+        } catch (MessagingException messagingException) {
+            logger.error("Error while sending email with HTML content: ", messagingException);
+        }
+    }
+
+    @Override
+    public void sendEmailWithFileStream(String[] recipient, String subject, String message, MultipartFile file) {
+        logger.info("(Service) Sending email to: {} with file attachment.", recipient);
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setFrom(senderEmailId);
-            helper.setTo(receiver);
+            helper.setTo(recipient);
             helper.setSubject(subject);
             helper.setText(message, true);
 

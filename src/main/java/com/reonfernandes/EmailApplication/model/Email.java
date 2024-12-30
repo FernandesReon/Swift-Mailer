@@ -1,6 +1,7 @@
 package com.reonfernandes.EmailApplication.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,8 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 public class Email {
 
-    @NotBlank(message = "Receiver's email is required.")
-    private String receiver;
+    @NotEmpty(message = "Receiver's email is required.")
+    private String[] recipient;
 
     @NotBlank(message = "Subject of email is required.")
     private String subject;
